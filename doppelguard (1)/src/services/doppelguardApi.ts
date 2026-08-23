@@ -14,7 +14,15 @@ const STORAGE_KEY_API_BASE = "doppelguard_api_base_url";
 export function getApiBaseUrl(): string {
   const custom = localStorage.getItem(STORAGE_KEY_API_BASE);
   if (custom) return custom.trim().replace(/\/+$/, "");
-  return (import.meta as any).env?.VITE_API_BASE_URL || "http://localhost:8000";
+  const envUrl = (import.meta as any).env?.VITE_API_BASE_URL;
+  if (envUrl) return envUrl.trim().replace(/\/+$/, "");
+  if (typeof window !== "undefined") {
+    if (window.location.port === "5173") {
+      return "http://localhost:8000";
+    }
+    return window.location.origin;
+  }
+  return "http://localhost:8000";
 }
 
 export function setApiBaseUrl(url: string): void {

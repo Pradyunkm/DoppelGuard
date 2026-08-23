@@ -15,30 +15,40 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState<string>("dashboard");
   const [currentAnalysis, setCurrentAnalysis] = useState<ProfileAnalysisResponse | null>(null);
 
-  // Auto-scan if opened with ?username=... or tab navigation from external apps like DoppelGram
+  // Auto-scan if opened with ?username=... from external apps like DoppelGram
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const userParam = params.get("username");
+    const nameParam = params.get("name");
+    const bioParam = params.get("bio");
+    const photoParam = params.get("photo_url") || params.get("avatar");
+    const followersParam = params.get("followers");
+    const followingParam = params.get("following");
+    const ageParam = params.get("account_age_days") || params.get("age");
+    const linksParam = params.get("links");
     const tabParam = params.get("tab");
 
     if (userParam) {
-      // Trigger automatic scan for the incoming profile handle
+      const linksArray = linksParam ? linksParam.split(",").filter(Boolean) : [];
+      const profileToScan = {
+        username: userParam.replace(/^@/, ""),
+        name: nameParam || userParam.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
+        bio: bioParam || "Inspected from DoppelGram social platform simulation.",
+        photo_url: photoParam || "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
+        followers: followersParam ? parseInt(followersParam, 10) : (userParam.includes("official") || userParam.includes("giveaway") ? 120 : 4500),
+        following: followingParam ? parseInt(followingParam, 10) : (userParam.includes("official") || userParam.includes("giveaway") ? 4800 : 320),
+        account_age_days: ageParam ? parseInt(ageParam, 10) : (userParam.includes("official") || userParam.includes("giveaway") ? 4 : 850),
+        links: linksArray.length > 0 ? linksArray : (userParam.includes("official") || userParam.includes("giveaway") ? ["https://t.me/claim-giveaway"] : [])
+      };
+
       import("./services/doppelguardApi").then(({ doppelguardApi }) => {
-        doppelguardApi.checkProfile({
-          username: userParam,
-          name: userParam.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
-          bio: "Inspected from DoppelGram social platform simulation.",
-          photo_url: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
-          followers: userParam.includes("official") || userParam.includes("giveaway") ? 120 : 4500,
-          following: userParam.includes("official") || userParam.includes("giveaway") ? 4800 : 320,
-          account_age_days: userParam.includes("official") || userParam.includes("giveaway") ? 4 : 850,
-          links: ["https://t.me/claim-giveaway"]
-        })
+        doppelguardApi.checkProfile(profileToScan)
           .then((res) => {
             setCurrentAnalysis(res);
             setCurrentTab("result");
           })
-          .catch(() => {
+          .catch((err) => {
+            console.error("Auto-scan error:", err);
             setCurrentTab("check");
           });
       });

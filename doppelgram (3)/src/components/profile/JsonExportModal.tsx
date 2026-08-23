@@ -148,10 +148,21 @@ export const JsonExportModal: React.FC = () => {
   };
 
   const handleOpenDoppelGuard = () => {
-    window.open(DOPPELGUARD_FRONTEND_URL, '_blank', 'noopener,noreferrer');
+    const doppelguardUrl = (import.meta as any).env?.VITE_DOPPELGUARD_FRONTEND_URL || 'https://color-changelog-ebony-constitution.trycloudflare.com';
+    const params = new URLSearchParams({
+      username: exportProfileData.username,
+      name: exportProfileData.displayName || '',
+      bio: exportProfileData.bio || '',
+      photo_url: exportProfileData.profileImage || '',
+      followers: String(exportProfileData.followers || 0),
+      following: String(exportProfileData.following || 0),
+      account_age_days: String(exportProfileData.accountAgeDays || 0),
+      links: (exportProfileData.links || []).map(l => l.url).join(',')
+    });
+    window.open(`${doppelguardUrl}/?${params.toString()}`, '_blank', 'noopener,noreferrer');
     addToast({
       type: 'info',
-      message: 'Opening DoppelGuard Forensics Platform...'
+      message: `Opening DoppelGuard Forensic Hub for @${exportProfileData.username}...`
     });
   };
 

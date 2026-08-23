@@ -27,6 +27,7 @@ def extract_text_signal(bio: str, name: str, reference_bio: Optional[str] = None
         ref_text = reference_bio.lower().strip()
         words_target = set(combined_text.split())
         words_ref = set(ref_text.split())
+        intersection: set = set()
         if not words_ref or not words_target:
             sim_score = 0.0
         else:

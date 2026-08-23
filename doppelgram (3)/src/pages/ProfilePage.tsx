@@ -229,7 +229,24 @@ export const ProfilePage: React.FC = () => {
                 {/* Security Audit / Check Profile button */}
                 <button
                   id="profile-scan-security-btn"
-                  onClick={() => openExportJsonModal(profile)}
+                  onClick={() => {
+                    const doppelguardUrl = (import.meta as any).env?.VITE_DOPPELGUARD_FRONTEND_URL || 'https://color-changelog-ebony-constitution.trycloudflare.com';
+                    const params = new URLSearchParams({
+                      username: profile.username,
+                      name: profile.displayName || '',
+                      bio: profile.bio || '',
+                      photo_url: profile.profileImage || '',
+                      followers: String(profile.followers || 0),
+                      following: String(profile.following || 0),
+                      account_age_days: String(profile.accountAgeDays || 0),
+                      links: (profile.links || []).map(l => l.url).join(',')
+                    });
+                    window.open(`${doppelguardUrl}/?${params.toString()}`, '_blank', 'noopener,noreferrer');
+                    addToast({
+                      type: 'info',
+                      message: `Redirecting to DoppelGuard to audit @${profile.username}...`
+                    });
+                  }}
                   title="Check profile in DoppelGuard AI for impersonation, scam triggers, and fake signals"
                   className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 hover:bg-indigo-500/20 dark:hover:bg-indigo-500/30 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs active:scale-95"
                 >
