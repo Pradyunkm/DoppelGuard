@@ -3,6 +3,7 @@ DoppelGuard FastAPI Main Application.
 """
 
 import os
+import time
 import json
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -152,7 +153,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from routes.auth import router as auth_router
+
+# Request Audit & Security Header Middleware
+@app.middleware("http")
+async def security_audit_middleware(request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    duration_ms = round((time.time() - start_time) * 1000, 1)
+    
+    # Add Security Headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Server"] = "DoppelGuard-Security-Gateway"
+    
+    return response
+
 # Register routes
+app.include_router(auth_router)
 app.include_router(profile_router)
 app.include_router(reports_router)
 app.include_router(evaluation_router)
@@ -163,15 +182,16 @@ def health_check():
     """Health check endpoint to verify backend service status and scoring engine."""
     return {
         "status": "ok",
-        "service": "DoppelGuard Hybrid Impersonation Forensics Engine",
+        "service": "DoppelGuard Enterprise Impersonation Risk Engine",
         "version": "2.0.0",
         "capabilities": [
+            "JWT Authentication & Role-Based Access Control (RBAC)",
+            "SSRF Prevention & DNS IP Range Defense",
             "64-bit DCT Perceptual Hashing (pHash/dHash)",
             "Trained XGBoost + Random Forest Ensemble ML",
             "SHAP-style Feature Attribution (XAI)",
-            "Live Social Media URL Scraper",
-            "Cross-Platform Identity Matrix",
-            "40-Profile Ground Truth Accuracy Benchmark Suite"
+            "Server-Side AI Gateway & Key Protection",
+            "50-Profile Empirical Benchmark & Stress Suite"
         ],
         "default_weights": DEFAULT_SIGNAL_WEIGHTS
     }

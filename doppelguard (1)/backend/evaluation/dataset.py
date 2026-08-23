@@ -779,5 +779,199 @@ GROUND_TRUTH_DATASET: List[Dict[str, Any]] = [
             "account_age_days": 1210,
             "links": ["https://store.steampowered.com/app/19821/StarfallValley"]
         }
+    },
+    # =========================================================================
+    # CLASS 3: STRESS-TEST EDGE CASES (HARD / AMBIGUOUS REAL-WORLD) - 10 CASES
+    # =========================================================================
+    {
+        "id": "gt-stress-01",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Fan Account",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Hard",
+        "profile": {
+            "username": "elon_musk_fan_club_daily",
+            "name": "Elon Musk Fan Club",
+            "bio": "Unofficial fan page dedicated to SpaceX launches and Tesla news. Created by community fans. We NEVER host giveaways or ask for DM crypto.",
+            "photo_url": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
+            "followers": 18200,
+            "following": 320,
+            "account_age_days": 1450,
+            "links": ["https://spacex.com"]
+        }
+    },
+    {
+        "id": "gt-stress-02",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Recruiter",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Hard",
+        "profile": {
+            "username": "sarah_google_recruiting",
+            "name": "Sarah Miller | Google Tech Staffing",
+            "bio": "Technical Recruiter @ Google. Sourcing Staff Software Engineers and ML Researchers for Cloud Infrastructure. Apply via official Google Careers portal below.",
+            "photo_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+            "followers": 14500,
+            "following": 680,
+            "account_age_days": 1890,
+            "links": ["https://careers.google.com/jobs"]
+        }
+    },
+    {
+        "id": "gt-stress-03",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Dual Account",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Medium",
+        "profile": {
+            "username": "alex_design_alt",
+            "name": "Alex Roberts [Archival Alt]",
+            "bio": "Authorized secondary account for 35mm film outtakes and raw design sketches. Main portfolio profile: @alex_roberts",
+            "photo_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+            "followers": 3200,
+            "following": 120,
+            "account_age_days": 650,
+            "links": ["https://alexroberts.design"]
+        }
+    },
+    {
+        "id": "gt-stress-04",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Inactive Account",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Hard",
+        "profile": {
+            "username": "john_doe_2018",
+            "name": "John Doe",
+            "bio": "",
+            "photo_url": "",
+            "followers": 14,
+            "following": 42,
+            "account_age_days": 2400,
+            "links": []
+        }
+    },
+    {
+        "id": "gt-stress-05",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Legitimate Shortened Link",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Hard",
+        "profile": {
+            "username": "tech_reviews_sam",
+            "name": "Sam Thorne",
+            "bio": "Hardware reviewer & YouTuber. New video benchmarking RTX 5090 graphics cards live now!",
+            "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+            "followers": 89000,
+            "following": 410,
+            "account_age_days": 1950,
+            "links": ["https://bit.ly/sam-rtx5090-review"]
+        }
+    },
+    {
+        "id": "gt-stress-06",
+        "ground_truth_label": 1,
+        "ground_truth_class": "MALICIOUS",
+        "category": "Multilingual Scam",
+        "threat_type": "impersonation",
+        "target_entity": "Jio Digital",
+        "difficulty": "Hard",
+        "profile": {
+            "username": "jio_free_5g_recharge_lakh",
+            "name": "Reliance Jio 5G Unlimited Offer",
+            "bio": "Jio celebrating 10 years! Free 84 days 5G recharge for all users. Register rs 500 registration fee. Guaranteed jackpot cashback.",
+            "photo_url": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=150",
+            "followers": 210,
+            "following": 3400,
+            "account_age_days": 4,
+            "links": ["http://jio-recharge-free-5g.xyz"]
+        }
+    },
+    {
+        "id": "gt-stress-07",
+        "ground_truth_label": 1,
+        "ground_truth_class": "MALICIOUS",
+        "category": "Brand Typo-squatting",
+        "threat_type": "brand_impersonation",
+        "target_entity": "Netflix",
+        "difficulty": "Medium",
+        "profile": {
+            "username": "netflx_global_support",
+            "name": "Netflix Billing & Subscription Help",
+            "bio": "Official Netflix payment resolution team. Account suspended due to card decline? Update details via security link.",
+            "photo_url": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=150",
+            "followers": 85,
+            "following": 1950,
+            "account_age_days": 6,
+            "links": ["http://netflx-billing-update.com/login"]
+        }
+    },
+    {
+        "id": "gt-stress-08",
+        "ground_truth_label": 1,
+        "ground_truth_class": "MALICIOUS",
+        "category": "Visual Theft",
+        "threat_type": "impersonation",
+        "target_entity": "Vitalik Buterin",
+        "difficulty": "Hard",
+        "profile": {
+            "username": "crypto_alpha_signals_daily",
+            "name": "Ethereum Core VIP Signals",
+            "bio": "Daily 100x leverage signals. 98% win rate guaranteed. DM for VIP Telegram channel entry.",
+            "photo_url": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+            "followers": 410,
+            "following": 2900,
+            "account_age_days": 11,
+            "links": ["https://t.me/eth_vip_signals_fast"]
+        }
+    },
+    {
+        "id": "gt-stress-09",
+        "ground_truth_label": 1,
+        "ground_truth_class": "MALICIOUS",
+        "category": "Financial Advisory Scam",
+        "threat_type": "recruitment_scam",
+        "target_entity": "SEBI Advisor",
+        "difficulty": "Medium",
+        "profile": {
+            "username": "sebi_registered_stock_jackpot",
+            "name": "SEBI Registered Stock Advisory",
+            "bio": "SEBI Registered Analyst. Daily intraday jackpot calls 100% accurate. Rs 500 registration fee. Guaranteed returns 1 crore.",
+            "photo_url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150",
+            "followers": 190,
+            "following": 4100,
+            "account_age_days": 5,
+            "links": ["https://wa.me/919876543210"]
+        }
+    },
+    {
+        "id": "gt-stress-10",
+        "ground_truth_label": 0,
+        "ground_truth_class": "BENIGN",
+        "category": "Default Avatar Creator",
+        "threat_type": "none",
+        "target_entity": None,
+        "difficulty": "Hard",
+        "profile": {
+            "username": "dev_guru_go",
+            "name": "Karan Sharma",
+            "bio": "Go backend developer building distributed raft consensus algorithms. Author of 'Go In Action' tutorials.",
+            "photo_url": "",
+            "followers": 6400,
+            "following": 310,
+            "account_age_days": 1420,
+            "links": ["https://github.com/karansharma-go"]
+        }
     }
 ]
+
