@@ -1,0 +1,6 @@
+{
+  "name": "DoppelGuard",
+  "description": "AI-powered social media impersonation risk analysis dashboard with modular scoring engine, profile comparison, and detailed threat forensics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

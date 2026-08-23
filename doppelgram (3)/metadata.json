@@ -1,0 +1,6 @@
+{
+  "name": "DoppelGram",
+  "description": "Controlled social media simulation test environment for DoppelGuard profile impersonation and dual account analysis",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
